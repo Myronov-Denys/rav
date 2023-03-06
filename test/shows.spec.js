@@ -244,7 +244,7 @@ test.beforeEach(async ({ page }, testInfo) => {
       await expect(showsPage.allCategoty).toHaveClass(/styles_active/);
     });
 
-    test.only('Open "Documentaries" shows from dropdown list on Sidebar', async ({ page }) => {
+    test('Open "Documentaries" shows from dropdown list on Sidebar', async ({ page }) => {
       const homePage = new HomePage(page)
       const showsPage = new ShowsPage(page)
   
@@ -264,7 +264,7 @@ test.beforeEach(async ({ page }, testInfo) => {
       await expect(showsPage.documentariesCategoty).toHaveClass(/styles_active/);
     });
 
-    test.only('Open "Special Events" shows from dropdown list on Sidebar', async ({ page }) => {
+    test('Open "Special Events" shows from dropdown list on Sidebar', async ({ page }) => {
       const homePage = new HomePage(page)
       const showsPage = new ShowsPage(page)
   
@@ -284,7 +284,7 @@ test.beforeEach(async ({ page }, testInfo) => {
       await expect(showsPage.specialEventsCategoty).toHaveClass(/styles_active/);
     });
     
-    test.only('Open "News" shows from dropdown list on Sidebar', async ({ page }) => {
+    test('Open "News" shows from dropdown list on Sidebar', async ({ page }) => {
       const homePage = new HomePage(page)
       const showsPage = new ShowsPage(page)
   
@@ -304,7 +304,7 @@ test.beforeEach(async ({ page }, testInfo) => {
       await expect(showsPage.newsCategoty).toHaveClass(/styles_active/);
     });
 
-    test.only('Open "Opinion" shows from dropdown list on Sidebar', async ({ page }) => {
+    test('Open "Opinion" shows from dropdown list on Sidebar', async ({ page }) => {
       const homePage = new HomePage(page)
       const showsPage = new ShowsPage(page)
   
@@ -324,7 +324,7 @@ test.beforeEach(async ({ page }, testInfo) => {
       await expect(showsPage.opinionCategoty).toHaveClass(/styles_active/);
     });
 
-    test.only('Open "Show Schedule" shows from dropdown list on Sidebar', async ({ page }) => {
+    test('Open "Show Schedule" shows from dropdown list on Sidebar', async ({ page }) => {
       const homePage = new HomePage(page)
       const showsPage = new ShowsPage(page)
   

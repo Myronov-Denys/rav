@@ -4,6 +4,7 @@ exports.TestValue = class TestValue {
     constructor (page) {
         this.page = page;
 
+        this.rokuAppUrl = "https://channelstore.roku.com/en-gb/details/5e1b380d0d963b69b988490cd2a0a488/americas-voice-news"
     
       }
 
@@ -18,6 +19,9 @@ exports.TestValue = class TestValue {
       async open_Live_Url() {
         await this.page.goto('https://americasvoice.news/');
       }
+
+
+      
 
 }
 
