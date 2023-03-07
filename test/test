@@ -1,0 +1,13 @@
+ 
+ 
+        // const iphonePageTitle = await newTab.title();
+        // const regexSpecialSymbols = /[^a-zA-Z\s]/g;
+        // const titleToCompare = iphonePageTitle.replace(regexSpecialSymbols, '');
+        // const expectedTitle = iPhoneAppPage.iPhoneAppPageTitle.replace(regexSpecialSymbols, '');
+        // await expect(titleToCompare).toBe(expectedTitle);
+        // await expect('').toMatch('');
+        // await expect(titleToCompare).toMatch(iPhoneAppPage.iPhoneAppPageTitle);
+
+
+        //console.log('Title :' + await newTab.title());
+         //console.log('Url :' + await newTab.url());
