@@ -12,4 +12,4 @@ exports.IPhoneAppPage = class IPhoneAppPage {
         this.iPhoneAppMainText = page.locator("//h1[@class='product-header__title app-header__title']");
         this.regexiPhoneAppPageURL = /https:\/\/apps\.apple\.com\/.*\/app\/americas-voice\/id1414478547.*/;
     }
-}
+};
