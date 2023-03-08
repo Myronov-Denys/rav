@@ -7,7 +7,7 @@ exports.RokuAppPage = class RokuAppPage {
         // Roku app page
         this.rokuAppTitle = page.locator("//title[contains(text(),'Voice | TV app | Roku Channel Store | Roku')]");
         this.rokuAppMainText = page.locator("//h1[contains(text(),'Voice')]");
-        this.regexRokuAppPageURL = /.*channelstore\.roku\.com.*\/americas-voice-news/;
+        this.regexRokuAppPageURL = /https:\/\/channelstore\.roku\.com.*\/(americas-voice-news|real-americas-voice)/;
     }
 
     // Actions

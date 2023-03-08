@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { test, expect } = require('@playwright/test');
 const { AppsPage } = require('./pages/AppPages/appsPage');
 const { HomePage } = require('./pages/homePage');
@@ -100,7 +101,7 @@ test.describe('Header apps', () => {
         console.log('Assert test 1: New tab have the correct URL');
         await expect(newTab.url()).toMatch(iPhoneAppPage.regexiPhoneAppPageURL);
 
-        console.log('Assert test 2: The "iPhone" main text is displayed');
+        console.log('Assert test 2: The "iTunce" main text is displayed');
         await expect(await iPhoneAppPage.iPhoneAppMainText).toBeVisible();
     });
 
@@ -121,7 +122,7 @@ test.describe('Header apps', () => {
         console.log('Assert test 1: New tab have the correct URL');
         await expect(newTab.url()).toMatch(iPhoneAppPage.regexiPhoneAppPageURL);
 
-        console.log('Assert test 2: The "Apple TV" main text is displayed');
+        console.log('Assert test 2: The "iTunce" main text is displayed');
         await expect(await iPhoneAppPage.iPhoneAppMainText).toBeVisible();
     });
 
@@ -147,10 +148,126 @@ test.describe('Header apps', () => {
     });
 });
 
+test.describe('The "Get our Apps" section on home page ', () => {
+    test('Open "Apps" page from the "Get our Apps" section on home page', async ({ page }) => {
+        const homePage = new HomePage(page);
+        const appsPage = new AppsPage(page);
+
+        console.log('Step 1: Click to the "App" button on header');
+        await homePage.appsHeaderButton.click();
+
+        console.log('Assert tests: The "App" page have correct url and title');
+        await expect(page).toHaveURL(appsPage.urlAppPage);
+        await expect(page).toHaveTitle(appsPage.appsTitle);
+    });
+});
+
 test.describe('Sidebar apps', () => {
 
 });
 
-test.describe(' Apps on the "APP" page', () => {
+test.describe('Apps on the "APP" page', () => {
+    test.beforeEach(async ({ page }, testInfo) => {
+        console.log(`PreCondition 2: Open the "App" page : ${testInfo.title}`);
+        const homePage = new HomePage(page);
+        const appsPage = new AppsPage(page);
 
+        await homePage.appsHeaderButton.click();
+        await appsPage.appsMainText.waitFor();
+        await appsPage.scrollText.scrollIntoViewIfNeeded();
+    });
+
+    test('Open "Roku" page from the "App" page', async ({ page }) => {
+        const appsPage = new AppsPage(page);
+
+        console.log('Step 1: Click the "Roku" app icon');
+        const [newTab] = await Promise.all([
+            page.waitForEvent('popup'),
+            await appsPage.rokuAppIcon.click(),
+        ]);
+
+        await newTab.waitForLoadState();
+        const rokuAppPage = new RokuAppPage(newTab);
+
+        console.log('Assert test 1: New tab with the correct URL open');
+        expect(newTab.url()).toMatch(rokuAppPage.regexRokuAppPageURL);
+
+        console.log('Assert test 2: Main text is displayed on Roku app page');
+        await expect(rokuAppPage.rokuAppMainText).toBeVisible();
+    });
+    test('Open "Android" page from the "App" page', async ({ page }) => {
+        const appsPage = new AppsPage(page);
+
+        console.log('Step 1: Click the "Android" app icon');
+        const [newTab] = await Promise.all([
+            page.waitForEvent('popup'),
+            await appsPage.androidAppIcon.click(),
+        ]);
+
+        await newTab.waitForLoadState();
+        const androidAppPage = new AndroidAppPage(newTab);
+
+        console.log('Assert test 1: New tab have the correct URL');
+        expect(newTab.url()).toMatch(androidAppPage.regexAndroidAppPageURL);
+
+        console.log('Assert test 2: The "Android" app page title is displayed');
+        expect(await newTab.title()).toMatch(androidAppPage.androidAppPageTitle);
+    });
+
+    test('Open "Apple" page from the "App" page', async ({ page }) => {
+        const appsPage = new AppsPage(page);
+
+        console.log('Step 1: Click the "Apple" app icon');
+        const [newTab] = await Promise.all([
+            page.waitForEvent('popup'),
+            await appsPage.appleAppIcon.click(),
+        ]);
+
+        await newTab.waitForLoadState();
+        const iPhoneAppPage = new IPhoneAppPage(newTab);
+
+        console.log('Assert test 1: New tab have the correct URL');
+        await expect(newTab.url()).toMatch(iPhoneAppPage.regexiPhoneAppPageURL);
+
+        console.log('Assert test 2: The "iTunce" main text is displayed');
+        await expect(await iPhoneAppPage.iPhoneAppMainText).toBeVisible();
+    });
+
+    test('Open "Apple TV" page from the "App" page', async ({ page }) => {
+        const appsPage = new AppsPage(page);
+
+        console.log('Step 1: Click the "Apple TV" app icon');
+        const [newTab] = await Promise.all([
+            page.waitForEvent('popup'),
+            await appsPage.appleTvAppIcon.click(),
+        ]);
+
+        await newTab.waitForLoadState();
+        const iPhoneAppPage = new IPhoneAppPage(newTab);
+
+        console.log('Assert test 1: New tab have the correct URL');
+        await expect(newTab.url()).toMatch(iPhoneAppPage.regexiPhoneAppPageURL);
+
+        console.log('Assert test 2: The "iTunce" main text is displayed');
+        await expect(await iPhoneAppPage.iPhoneAppMainText).toBeVisible();
+    });
+
+    test('Open "Fire TV" page from the "App" page', async ({ page }) => {
+        const appsPage = new AppsPage(page);
+
+        console.log('Step 1: Click the "Apple TV" app icon');
+        const [newTab] = await Promise.all([
+            page.waitForEvent('popup'),
+            await appsPage.fireTvAppIcon.click(),
+        ]);
+
+        await newTab.waitForLoadState();
+        const fireTVAppPage = new FireTVAppPage(newTab);
+
+        console.log('Assert test 1: New tab have the correct URL');
+        await expect(newTab.url()).toMatch(fireTVAppPage.regexFireTVAppPageURL);
+
+        console.log('Assert test 2: The "Fire TV" main text is displayed');
+        await expect(await newTab.title()).toBe(fireTVAppPage.fireTVAppPageTitle);
+    });
 });
