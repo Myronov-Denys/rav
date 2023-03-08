@@ -1,10 +1,8 @@
 const { test, expect } = require('@playwright/test');
 
 const { ProjectPasswordPage } = require('./pages/projectPasswordPage');
-const { TestValue } = require('./pages/testValue')
-const { HomePage } = require('./pages/homePage')
-
-
+const { TestValue } = require('./pages/testValue');
+const { HomePage } = require('./pages/homePage');
 
 test.beforeEach(async ({ page }, testInfo) => {
     console.log(`enter Project Password  ${testInfo.title}`);
