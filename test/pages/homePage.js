@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { expect } = require('@playwright/test');
 
 exports.HomePage = class HomePage {
@@ -37,15 +38,27 @@ exports.HomePage = class HomePage {
         this.appleTVAppOnHeader = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Apps')]/..//a[contains(text(),'Apple TV')]");
         this.fireTVAppOnHeader = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Apps')]/..//a[contains(text(),'Fire TV')]");
 
+        // Apps from the "Get our Apps" section
+        this.getOurAppsTextLink = page.locator("//h4//a[contains(text(),'Get our Apps')]");
+        this.downloadNowButtonOnGetOurApp = page.locator("//h4//a[contains(text(),'Download now')]");
+        this.rokuAppIconOnGetOurApps = page.locator("//a[@aria-label='Open roku application']");
+        this.androidAppIconOnGetOurApps = page.locator("//a[@aria-label='Open android application']");
+        this.appleAppIconOnGetOurApps = page.locator("//a[@aria-label='Open apple application']");
+        this.appleTvAppIconOnGetOurApps = page.locator("//a[@aria-label='Open apple-tv application']");
+        this.fireTvAppIconOnGetOurApps = page.locator("//a[@aria-label='Open fire-tv application']");
+
+        // Apps link on footer
+        this.downloadNowButtonOnFooter = page.locator("//h2[contains(text(),'DOWNLOAD OUR APPS')]/following-sibling::a[contains(text(),'DOWNLOAD NOW')]");
+
         // Sidebar //
 
+        // Shows sidebar
         this.showsSidebarButton = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']");
-        // Shows
 
         this.showsDropDownButtonOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../button");
         this.showsDropDownMenuOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]");
 
-        // Shows links
+        // Shows sidebar links
 
         this.showsLinksOnSideBarDropDownMenu = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a");
 
@@ -55,6 +68,21 @@ exports.HomePage = class HomePage {
         this.newsShowsLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='News']");
         this.opinionShowsLinkOnDropDownMenuSidebarSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Opinion']");
         this.showScheduleShowsLinkOnDropDownMenuSidebarSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Show Schedule']");
+
+        // Apps sidebar
+        this.appsSidebarButton = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']");
+        this.appsDropDownButtonOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../button");
+
+        // Apps sidebar drop down menu
+        this.appsDropDownMenuOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]");
+        this.appsLinksOnSideBarDropDownMenu = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a");
+
+        // Apps on sidebar drop down menu
+        this.rokuAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Roku']");
+        this.androidAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Android']");
+        this.iPhoneAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='iPhone']");
+        this.appleTvAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Apple TV']");
+        this.fireTvAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Fire TV']");
     }
 
     // Actions
