@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { expect } = require('@playwright/test');
 
 exports.ProjectPasswordPage = class ProjectPasswordPage {

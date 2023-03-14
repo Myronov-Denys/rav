@@ -7,6 +7,7 @@ exports.ShowsPage = class ShowsPage {
         // All Shows
         this.showsTitle = page.locator("//h1[contains(text(),'Voice News Shows')]");
         this.allCategoty = page.locator("//li/a[text()='All']");
+        this.viewShowScheduleButtonOnAllShowsPage = page.locator("//h1/following-sibling::div/a[contains(text(),'View Show Schedule')]");
 
         // Documentaries shows page
         this.documentariesShowsTitle = page.locator("//h1[text()='Documentaries']");

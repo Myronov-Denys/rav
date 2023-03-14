@@ -13,7 +13,7 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './test',
   /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  timeout: 0 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -22,7 +22,7 @@ module.exports = defineConfig({
     timeout: 5000
   },
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */

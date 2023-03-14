@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
 const { expect } = require('@playwright/test');
 
 exports.HomePage = class HomePage {
     constructor(page) {
         this.page = page;
+
+        // Cookies bar
+        this.cookiesCloseButton = page.locator('//div[@id="onetrust-close-btn-container"]');
 
         this.homeTitle = page.getByText('HOME OF REAL NEWS & HONEST VIEWS!');
 
@@ -37,15 +41,34 @@ exports.HomePage = class HomePage {
         this.appleTVAppOnHeader = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Apps')]/..//a[contains(text(),'Apple TV')]");
         this.fireTVAppOnHeader = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Apps')]/..//a[contains(text(),'Fire TV')]");
 
+        // Apps from the "Get our Apps" section
+        this.getOurAppsTextLink = page.locator("//h4//a[contains(text(),'Get our Apps')]");
+        this.downloadNowButtonOnGetOurApp = page.locator("//h4//a[contains(text(),'Download now')]");
+        this.rokuAppIconOnGetOurApps = page.locator("//a[@aria-label='Open roku application']");
+        this.androidAppIconOnGetOurApps = page.locator("//a[@aria-label='Open android application']");
+        this.appleAppIconOnGetOurApps = page.locator("//a[@aria-label='Open apple application']");
+        this.appleTvAppIconOnGetOurApps = page.locator("//a[@aria-label='Open apple-tv application']");
+        this.fireTvAppIconOnGetOurApps = page.locator("//a[@aria-label='Open fire-tv application']");
+
+        // Apps link on footer
+        this.downloadNowButtonOnFooter = page.locator("//h2[contains(text(),'DOWNLOAD OUR APPS')]/following-sibling::a[contains(text(),'DOWNLOAD NOW')]");
+
+        // Social media
+        this.facebookLinkOnHeader = page.locator("//nav//div[contains(@class,'ms-auto navbar-nav')]/a[@title='Facebook']");
+        this.twitterLinkOnHeader = page.locator("//nav//div[contains(@class,'ms-auto navbar-nav')]/a[@title='Twitter']");
+        this.youTubeLinkOnHeader = page.locator("//nav//div[contains(@class,'ms-auto navbar-nav')]/a[@title='YouTube']");
+        this.instagramLinkOnHeader = page.locator("//nav//div[contains(@class,'ms-auto navbar-nav')]/a[@title='Instagram']");
+        this.rssLinkOnHeader = page.locator("//nav//div[contains(@class,'ms-auto navbar-nav')]/a[contains(@title,'Voice News')]");
+
         // Sidebar //
 
+        // Shows sidebar
         this.showsSidebarButton = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']");
-        // Shows
 
         this.showsDropDownButtonOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../button");
         this.showsDropDownMenuOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]");
 
-        // Shows links
+        // Shows sidebar links
 
         this.showsLinksOnSideBarDropDownMenu = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a");
 
@@ -55,9 +78,60 @@ exports.HomePage = class HomePage {
         this.newsShowsLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='News']");
         this.opinionShowsLinkOnDropDownMenuSidebarSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Opinion']");
         this.showScheduleShowsLinkOnDropDownMenuSidebarSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Shows']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Show Schedule']");
+
+        // Apps sidebar
+        this.appsSidebarButton = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']");
+        this.appsDropDownButtonOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../button");
+
+        // Apps sidebar drop down menu
+        this.appsDropDownMenuOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]");
+        this.appsLinksOnSideBarDropDownMenu = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a");
+
+        // Apps on sidebar drop down menu
+        this.rokuAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Roku']");
+        this.androidAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Android']");
+        this.iPhoneAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='iPhone']");
+        this.appleTvAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Apple TV']");
+        this.fireTvAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Fire TV']");
+
+        // WATCH RAV TV
+        this.viewShowScheduleButtonOnWatchRavTvSection = page.locator("//h3[text()='WATCH RAV TV']/following-sibling::div/a");
+
+        // Social media sidebar
+        this.facebookLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[@title='Facebook']");
+        this.twitterLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[@title='Twitter']");
+        this.youTubekLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[@title='YouTube']");
+        this.instagramLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[@title='Instagram']");
+        this.rssLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[contains(@title,'Voice News')]");
+
+        // Footer
+
+        // Social media on footer
+        this.facebookLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='Facebook']");
+        this.twitterLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='Twitter']");
+        this.youTubekLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='YouTube']");
+        this.instagramLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='Instagram']");
+        
+
+        // Social media feeds on footer
+        this.facebookFeedOnFooter = page.locator("//span[text()='Facebook Feed']");
+        this.twitterFeedOnFooter = page.locator("//span[text()='Twitter Feed']");
+        this.instagramFeedOnFooter = page.locator("//span[text()='Instagram Feed']");
+
+        // Social media iframe feeds on footer
+
+        this.facebookFeedDropDownIframe = page.locator("//span[text()='Facebook Feed']/../../../div[contains(@class,'styles_open')]");
+        this.twitterFeedDropDownIframe = page.locator("//span[text()='Twitter Feed']/../../../div[contains(@class,'styles_open')]");
+        this.instagramFeedDropDownIframe = page.locator("//span[text()='Instagram Feed']/../../../div[contains(@class,'styles_open')]");
     }
 
     // Actions
+
+    // Cookies bar
+
+    async clickCloseCookieBar() {
+        await this.cookiesCloseButton.click();
+    }
 
     // Header //
 
@@ -67,6 +141,27 @@ exports.HomePage = class HomePage {
 
     async openAppPageFromHeader() {
         await this.appsHeaderButton.click();
+    }
+
+    // Social mededia Header
+    async clickFacebookLinkHeader() {
+        await this.facebookLinkOnHeader.click();
+    }
+
+    async clickTwitterLinkHeader() {
+        await this.twitterLinkOnHeader.click();
+    }
+
+    async clickInstagramLinkHeader() {
+        await this.instagramLinkOnHeader.click();
+    }
+
+    async clickYouTubeLinkOnHeader() {
+        await this.youTubeLinkOnHeader.click();
+    }
+
+    async clickRssLinkOnHeader() {
+        await this.rssLinkOnHeader.click();
     }
 
     // SideBar //
@@ -82,6 +177,50 @@ exports.HomePage = class HomePage {
     async openShowsFromSidebar() {
         await this.clickSideBarMenu();
         await this.clickShowsInSidebar();
+    }
+
+    // Social mededia Sidebar
+
+    async clickFacebookLinkOnSidebar() {
+        await this.facebookLinkOnSidebar.click();
+    }
+
+    async clickTwitterLinkOnSidebar() {
+        await this.twitterLinkOnHeader.click();
+    }
+
+    async clickYouTubeLinkOnSidebar() {
+        await this.youTubekLinkOnSidebar.click();
+    }
+
+    async clickInstagramLinkOnSidebar() {
+        await this.instagramLinkOnSidebar.click();
+    }
+
+    async clickRssLinkOnSidebar() {
+        await this.rssLinkOnSidebar.click();
+    }
+
+    // Social mededia Footer
+
+    async clickFacebookLinkOnFooter() {
+        await this.facebookFeedOnFooter.scrollIntoViewIfNeeded();
+        await this.facebookLinkOnFooter.click();
+    }
+
+    async clickTwitterLinkOnFooter() {
+        await this.facebookFeedOnFooter.scrollIntoViewIfNeeded();
+        await this.twitterLinkOnFooter.click();
+    }
+
+    async clickInstagramLinkOnFooter() {
+        await this.facebookFeedOnFooter.scrollIntoViewIfNeeded();
+        await this.instagramLinkOnFooter.click();
+    }
+
+    async clickYoutubeLinkOnFooter() {
+        await this.facebookFeedOnFooter.scrollIntoViewIfNeeded();
+        await this.instagramLinkOnFooter.click();
     }
 
     // async click_Shows_In_Header() {
