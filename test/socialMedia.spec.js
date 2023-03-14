@@ -301,7 +301,7 @@ test.describe('Footer social media', () => {
         await expect(newTab.url()).toMatch(socialMediaPages.youTubePageURL);
     });
 
-    test.only('Open the "Instagram" link from header', async ({ page }) => {
+    test('Open the "Instagram" link from header', async ({ page }) => {
         const homePage = new HomePage(page);
 
         console.log('Step 1: Click a "Instagram" link in the footer');
@@ -321,5 +321,33 @@ test.describe('Footer social media', () => {
 
         console.log('Assert test 2: The "Fire TV" main text is displayed');
         await expect(await newTab.title()).toBe(socialMediaPages.instagramTitle);
+    });
+
+    test.describe('Footer social media Feed', () => {
+        test('Open the "Facebook" link from footer', async ({ page }) => {
+            const homePage = new HomePage(page);
+
+            console.log('Step 1: Click a "Facebook" link in the footer');
+
+            const [newTab] = await Promise.all([
+                page.waitForEvent('popup'),
+                await homePage.clickFacebookLinkOnFooter(),
+            ]);
+
+            console.log('Step 2: Wait for load a "Facebook" page');
+
+            await newTab.waitForLoadState();
+            const socialMediaPages = new SocialMediaPages(newTab);
+
+            // Assert test
+
+            await socialMediaPages.facebookMainText.waitFor();
+
+            console.log('Assert test 1: New tab have the correct URL');
+            await expect(newTab.url()).toMatch(socialMediaPages.regexFacebookPageURL);
+
+            console.log('Assert test 2: The "Fire TV" main text is displayed');
+            await expect(await newTab.title()).toBe(socialMediaPages.facebookTitle);
+        });
     });
 });
