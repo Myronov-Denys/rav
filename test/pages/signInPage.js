@@ -1,4 +1,5 @@
 const { expect } = require('@playwright/test');
+const { TestValue } = require('./testValue');
 
 exports.SignInPage = class SignInPage {
     constructor(page) {
@@ -12,4 +13,14 @@ exports.SignInPage = class SignInPage {
     }
 
     // Actions
+
+    async enterValidEmail() {
+        const testValue = new TestValue(this.page);
+        await this.emailField.fill(testValue.validEmail);
+    }
+
+    async enterValidPassword() {
+        const testValue = new TestValue(this.page);
+        await this.passwordField.fill(testValue.validPassword);
+    }
 };

@@ -23,6 +23,7 @@ exports.HomePage = class HomePage {
         this.loginButtonOnProfilePopUpWindowOnHeader = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[@class='styles_links__dCvu1']/a[text()='Login']");
         this.createNewAccountButtonOnProfilePopUpWindowOnHeader = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[@class='styles_links__dCvu1']/a[text()='Create New Account']");
         this.profileIconOnProfilePopUpWindowOnHeader = page.locator("//div[contains(@class,'position-relative')]//div[@class='text-center p-4']//*[@role='img']");
+        this.loggedInUserEmailOnHeaderProfileWindow = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[@class='styles_mainText__Ham0w styles_links__dCvu1 mt-3']/a");
 
         // Shows
         this.showsDropDownMenuOnHeader = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Shows')]/..//a[contains(text(),'All')]/..");

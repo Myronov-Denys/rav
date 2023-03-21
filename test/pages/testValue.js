@@ -13,6 +13,10 @@ exports.TestValue = class TestValue {
         // Roku
         this.rokuAppUrl = 'https://channelstore.roku.com/en-gb/details/5e1b380d0d963b69b988490cd2a0a488/americas-voice-news';
         this.rokuAppPageTitle = "Real America's Voice | TV app | Roku Channel Store | Roku";
+
+        // User data
+        this.validEmail = '1234test667890+2@gmail.com';
+        this.validPassword = 'Test13579';
     }
 
     async open_Dev_Url() {
