@@ -16,6 +16,15 @@ exports.HomePage = class HomePage {
 
         this.showsHeaderButton = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Shows')]");
 
+        // Profile header
+        this.profileIconOnHeader = page.locator("//div[contains(@class,'d-none position-relative')]//a[@title='Login' or @title='Profile']");
+        this.youAreNotLoggedInTextOnProfilePopUpWindowOnHeader = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[contains(@class,'styles_mainText')]");
+
+        this.loginButtonOnProfilePopUpWindowOnHeader = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[@class='styles_links__dCvu1']/a[text()='Login']");
+        this.createNewAccountButtonOnProfilePopUpWindowOnHeader = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[@class='styles_links__dCvu1']/a[text()='Create New Account']");
+        this.profileIconOnProfilePopUpWindowOnHeader = page.locator("//div[contains(@class,'position-relative')]//div[@class='text-center p-4']//*[@role='img']");
+        this.loggedInUserEmailOnHeaderProfileWindow = page.locator("//div[@class='d-none position-relative d-xl-flex ms-auto navbar-nav']//p[@class='styles_mainText__Ham0w styles_links__dCvu1 mt-3']/a");
+
         // Shows
         this.showsDropDownMenuOnHeader = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Shows')]/..//a[contains(text(),'All')]/..");
 
@@ -83,18 +92,18 @@ exports.HomePage = class HomePage {
         this.appsSidebarButton = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']");
         this.appsDropDownButtonOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../button");
 
-        // Apps sidebar drop down menu
+        // Apps sidebar drop down menu sidebar
         this.appsDropDownMenuOnSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]");
         this.appsLinksOnSideBarDropDownMenu = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a");
 
-        // Apps on sidebar drop down menu
+        // Apps on sidebar drop down menu sidebar
         this.rokuAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Roku']");
         this.androidAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Android']");
         this.iPhoneAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='iPhone']");
         this.appleTvAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Apple TV']");
         this.fireTvAppLinkOnDropDownMenuSidebar = page.locator("//div[contains(@class,'styles_navMenu')]//a[text()='Apps']/../..//div[contains(@class, 'accordion-collapse')]//a[text()='Fire TV']");
 
-        // WATCH RAV TV
+        // WATCH RAV TV sidebar
         this.viewShowScheduleButtonOnWatchRavTvSection = page.locator("//h3[text()='WATCH RAV TV']/following-sibling::div/a");
 
         // Social media sidebar
@@ -104,6 +113,15 @@ exports.HomePage = class HomePage {
         this.instagramLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[@title='Instagram']");
         this.rssLinkOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[contains(@title,'Voice News')]");
 
+        // Profile sidebar
+        this.profileIconOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//a[@title='Login' or @title='Profile']");
+        this.profilePopUpWindowOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//div[@class='text-center p-4']");
+
+        this.youAreNotLoggedInTextOnProfilePopUpWindowOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//div[@class='text-center p-4']//p[contains(@class,'styles_mainText')]");
+        this.loginButtonOnProfilePopUpWindowOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//div[@class='text-center p-4']//p[contains(@class,'styles_links')]/a[text()='Login']");
+        this.createNewAccountButtonOnProfilePopUpWindowOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//div[@class='text-center p-4']//p[contains(@class,'styles_links')]/a[text()='Create New Account']");
+        this.profileIconOnProfilePopUpWindowOnSidebar = page.locator("//div[contains(@class,'styles_socialBar')]//div[@class='text-center p-4']//*[@role='img']");
+
         // Footer
 
         // Social media on footer
@@ -111,7 +129,6 @@ exports.HomePage = class HomePage {
         this.twitterLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='Twitter']");
         this.youTubekLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='YouTube']");
         this.instagramLinkOnFooter = page.locator("//p[text()='Click the on live feeds to directly interact with us. ']/..//a[@title='Instagram']");
-        
 
         // Social media feeds on footer
         this.facebookFeedOnFooter = page.locator("//span[text()='Facebook Feed']");
@@ -143,6 +160,10 @@ exports.HomePage = class HomePage {
         await this.appsHeaderButton.click();
     }
 
+    async clickProfileInHeader() {
+        await this.profileIconOnHeader.click();
+    }
+
     // Social mededia Header
     async clickFacebookLinkHeader() {
         await this.facebookLinkOnHeader.click();
@@ -164,10 +185,23 @@ exports.HomePage = class HomePage {
         await this.rssLinkOnHeader.click();
     }
 
+    // Profile popup window on header
+
+    async hoverToProfileIconHeader() {
+        await this.profileIconOnHeader.hover();
+    }
+
+    async clickLoginButtonOnHeader() {
+        await this.loginButtonOnProfilePopUpWindowOnHeader.click();
+        await this.page.waitForLoadState();
+        // await this.profilePopUpWindowOnSidebar.waitFor();
+    }
+
     // SideBar //
 
     async clickSideBarMenu() {
         await this.sideBarButton.click();
+        await this.showsSidebarButton.waitFor();
     }
 
     async clickShowsInSidebar() {
@@ -199,6 +233,24 @@ exports.HomePage = class HomePage {
 
     async clickRssLinkOnSidebar() {
         await this.rssLinkOnSidebar.click();
+    }
+
+    // Profile popup window on Sidebar
+
+    async hoverToProfileIconSidebar() {
+        await this.profileIconOnSidebar.hover();
+        await this.profilePopUpWindowOnSidebar.waitFor();
+    }
+
+    async clickProfileIconOnSidebar() {
+        await this.profileIconOnSidebar.click();
+        await this.page.waitForLoadState();
+    }
+
+    async clickLoginButtonOnSidebar() {
+        await this.loginButtonOnProfilePopUpWindowOnSidebar.click();
+        await this.page.waitForLoadState();
+        // await this.profilePopUpWindowOnSidebar.waitFor();
     }
 
     // Social mededia Footer
