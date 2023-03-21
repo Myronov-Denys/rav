@@ -159,6 +159,10 @@ exports.HomePage = class HomePage {
         await this.appsHeaderButton.click();
     }
 
+    async clickProfileInHeader() {
+        await this.profileIconOnHeader.click();
+    }
+
     // Social mededia Header
     async clickFacebookLinkHeader() {
         await this.facebookLinkOnHeader.click();
@@ -235,6 +239,11 @@ exports.HomePage = class HomePage {
     async hoverToProfileIconSidebar() {
         await this.profileIconOnSidebar.hover();
         await this.profilePopUpWindowOnSidebar.waitFor();
+    }
+
+    async clickProfileIconOnSidebar() {
+        await this.profileIconOnSidebar.click();
+        await this.page.waitForLoadState();
     }
 
     async clickLoginButtonOnSidebar() {

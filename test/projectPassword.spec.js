@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }, testInfo) => {
 
 // test.describe('project password tests'), () => {
 
-test.only('Enter valid project password', async ({ page }) => {
+test('Enter valid project password', async ({ page }) => {
     const projectPasswordPage = new ProjectPasswordPage(page);
     const homePage = new HomePage(page);
 

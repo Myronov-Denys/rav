@@ -9,5 +9,5 @@
         // await expect(titleToCompare).toMatch(iPhoneAppPage.iPhoneAppPageTitle);
 
 
-        //console.log('Title :' + await newTab.title());
-         //console.log('Url :' + await newTab.url());
+        // console.log('Title : ' + await newTab.title());
+        // console.log('Url : ' + await newTab.url());

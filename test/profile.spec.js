@@ -32,7 +32,7 @@ test.describe('Header profile', () => {
         await expect(homePage.profileIconOnProfilePopUpWindowOnHeader).toBeVisible();
     });
 
-    test('Open login page from header', async ({ page }) => {
+    test('Open login page from header via profile popup window', async ({ page }) => {
         const homePage = new HomePage(page);
         const signInPage = new SignInPage(page);
 
@@ -46,6 +46,21 @@ test.describe('Header profile', () => {
         await expect(signInPage.signInTitle).toBeVisible();
         await expect(signInPage.emailField).toBeVisible();
         await expect(signInPage.passwordField).toBeVisible();
+        await expect(signInPage.signInButton).toBeVisible();
+    });
+
+    test('Open login page from header via profile button', async ({ page }) => {
+        const homePage = new HomePage(page);
+        const signInPage = new SignInPage(page);
+
+        console.log('Step 1: Click to "Profile" icon on header');
+        await homePage.clickProfileInHeader();
+
+        console.log('Assert tests: The "Login" page is open');
+        await expect(signInPage.signInTitle).toBeVisible();
+        await expect(signInPage.emailField).toBeVisible();
+        await expect(signInPage.passwordField).toBeVisible();
+        await expect(signInPage.signInButton).toBeVisible();
     });
 });
 
@@ -56,7 +71,7 @@ test.describe('Sidebar profile', () => {
         console.log('Step 1: Open sidebar');
         await homePage.clickSideBarMenu();
 
-        console.log('Step 1: Hover to "Profile" icon on sidebar');
+        console.log('Step 2: Hover to "Profile" icon on sidebar');
         await homePage.hoverToProfileIconSidebar();
 
         // Asserts
@@ -66,5 +81,42 @@ test.describe('Sidebar profile', () => {
         await expect(homePage.createNewAccountButtonOnProfilePopUpWindowOnSidebar).toBeVisible();
         await expect(homePage.youAreNotLoggedInTextOnProfilePopUpWindowOnSidebar).toBeVisible();
         await expect(homePage.profileIconOnProfilePopUpWindowOnSidebar).toBeVisible();
+    });
+
+    test('Open login page from sidebar via profile popup window', async ({ page }) => {
+        const homePage = new HomePage(page);
+        const signInPage = new SignInPage(page);
+
+        console.log('Step 1: Open sidebar');
+        await homePage.clickSideBarMenu();
+
+        console.log('Step 2: Hover to "Profile" icon on sidebar');
+        await homePage.hoverToProfileIconSidebar();
+
+        console.log('Step 3: Click a "Login" button on sidebar');
+        await homePage.clickLoginButtonOnSidebar();
+
+        console.log('Assert tests: The "Login" page is open');
+        await expect(signInPage.signInTitle).toBeVisible();
+        await expect(signInPage.emailField).toBeVisible();
+        await expect(signInPage.passwordField).toBeVisible();
+        await expect(signInPage.signInButton).toBeVisible();
+    });
+
+    test('Open login page from sidebar via profile button', async ({ page }) => {
+        const homePage = new HomePage(page);
+        const signInPage = new SignInPage(page);
+
+        console.log('Step 1: Open sidebar');
+        await homePage.clickSideBarMenu();
+
+        console.log('Step 2: Click a "Profile" button on sidebar');
+        await homePage.clickProfileIconOnSidebar();
+
+        console.log('Assert tests: The "Login" page is open');
+        await expect(signInPage.signInTitle).toBeVisible();
+        await expect(signInPage.emailField).toBeVisible();
+        await expect(signInPage.passwordField).toBeVisible();
+        await expect(signInPage.signInButton).toBeVisible();
     });
 });
