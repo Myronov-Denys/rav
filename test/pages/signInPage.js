@@ -19,8 +19,17 @@ exports.SignInPage = class SignInPage {
         await this.emailField.fill(testValue.validEmail);
     }
 
+    async enterEmailWithoutAt() {
+        const testValue = new TestValue(this.page);
+        await this.emailField.fill(testValue.emailWithoutAt);
+    }
+
     async enterValidPassword() {
         const testValue = new TestValue(this.page);
         await this.passwordField.fill(testValue.validPassword);
+    }
+
+    async clickSignInButton() {
+        await this.signInButton.click();
     }
 };

@@ -45,3 +45,64 @@ test.describe('Valid login', () => {
         await expect(homePage.loggedInUserEmailOnHeaderProfileWindow).toHaveText(testValue.validEmail);
     });
 });
+
+test.describe('Invalid login', () => {
+    test('Login with incorrect email (without @)', async ({ page }) => {
+        const signInPage = new SignInPage(page);
+        const homePage = new HomePage(page);
+        const testValue = new TestValue(page);
+
+        console.log('Step 2: Enter email without @ on the "Email" field');
+        await signInPage.enterEmailWithoutAt();
+
+        console.log('Step 3: Enter a valid Password');
+        await signInPage.enterValidPassword();
+
+        console.log('Step 4: Click the "Sign In" button');
+        await signInPage.clickSignInButton();
+
+        console.log('Step 5: Wait the error message');
+
+        console.log('Assert tests');
+    });
+
+    test('Login with incorrect email (with double @)', async ({ page }) => {
+
+    });
+
+    test('Login with incorrect email (without domen)', async ({ page }) => {
+
+    });
+
+    test('Login with incorrect email (with extra letters)', async ({ page }) => {
+
+    });
+
+    test('Login with not registered email)', async ({ page }) => {
+
+    });
+
+    test('Login with incorrect password)', async ({ page }) => {
+
+    });
+
+    test('Login with empty email field)', async ({ page }) => {
+        console.log('Step 1: Enter a Valid Password');
+
+        console.log('Step 2: Click the "Sign In" button');
+
+        console.log('Assert tests');
+    });
+
+    test('Login with empty password field)', async ({ page }) => {
+
+    });
+
+    test('Login with empty email and password)', async ({ page }) => {
+
+    });
+
+    test('Enter email in password field and password in email field)', async ({ page }) => {
+
+    });
+});

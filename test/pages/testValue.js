@@ -16,6 +16,7 @@ exports.TestValue = class TestValue {
 
         // User data
         this.validEmail = '1234test667890+2@gmail.com';
+        this.emailWithoutAt = '1234test667890gmail.com';
         this.validPassword = 'Test13579';
     }
 
