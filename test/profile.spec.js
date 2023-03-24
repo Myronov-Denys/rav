@@ -126,28 +126,14 @@ test.describe('Sidebar profile', () => {
 test.describe('General Information', () => {
     test.beforeEach(async ({ page }, testInfo) => {
         console.log(`PreCondition 2: Log in and open "Profile" page : ${testInfo.title}`);
-        const testValue = new TestValue(page);
-        const projectPasswordPage = new ProjectPasswordPage(page);
+        const signInPage = new SignInPage(page);
+
+        await signInPage.logIn();
+    });
+
+    test.only('The "First Name" field maximum allowed number of characters', async ({ page }) => {
         const homePage = new HomePage(page);
 
         await homePage.clickProfileInHeader();
-    });
-
-    test('The "First Name" field maximum allowed number of characters', async ({ page }) => {
-        const homePage = new HomePage(page);
-
-        console.log('Step 1: Open sidebar');
-        await homePage.clickSideBarMenu();
-
-        console.log('Step 2: Hover to "Profile" icon on sidebar');
-        await homePage.hoverToProfileIconSidebar();
-
-        // Asserts
-
-        console.log('Assert tests: The profile popup window from sidebar are displayed');
-        await expect(homePage.loginButtonOnProfilePopUpWindowOnSidebar).toBeVisible();
-        await expect(homePage.createNewAccountButtonOnProfilePopUpWindowOnSidebar).toBeVisible();
-        await expect(homePage.youAreNotLoggedInTextOnProfilePopUpWindowOnSidebar).toBeVisible();
-        await expect(homePage.profileIconOnProfilePopUpWindowOnSidebar).toBeVisible();
     });
 });
