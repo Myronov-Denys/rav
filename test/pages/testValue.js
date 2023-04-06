@@ -26,6 +26,9 @@ exports.TestValue = class TestValue {
         this.emailWithExtraLeters = '1234test667890+2@gmail.comqwertyui';
 
         this.invalidPassword = 'qwertyu10';
+
+        // HTML Tags
+        this.htmlLinkWithLinkText = '<a href="www.google.com">link</a>';
     }
 
     async open_Dev_Url() {
