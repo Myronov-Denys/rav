@@ -16,7 +16,7 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
         // Error message
         this.maxLengthFirstNameErrorMessage = page.locator("//label[contains(text(),'First Name')]/../div[@class='invalid-feedback']");
         this.maxLengthLastNameErrorMessage = page.locator("//label[contains(text(),'Last Name')]/../div[@class='invalid-feedback']");
-        this.maxLengthNicknameErrorMessage = page.locator("//div[@class='position-relative']/textarea");
+        this.maxLengthNicknameErrorMessage = page.locator("//label[contains(text(),'Nickname')]/../div[@class='invalid-feedback']");
         this.maxLength100CharactersOnStatusErrorMessage = page.locator("//label[contains(text(),'Status ')]/../div[@class='invalid-feedback']");
         // Social errors
         this.incorrectFacebookUrlErrorMessage = page.locator("//input[@id='fb-social']/../div[@class='invalid-feedback']");

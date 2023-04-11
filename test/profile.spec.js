@@ -173,12 +173,12 @@ test.describe('General Information', () => {
             const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
 
             console.log('Step 1: Enter in the "Nickname" field more than 50 characters');
+
             await profileGeneralInformationPage.enter51CharactersInTheNicknameField();
 
             console.log('Assert tests');
 
-            await expect(profileGeneralInformationPage.nicknameField).toBeVisible({ timeout: 10000 });
-            await expect(profileGeneralInformationPage.maxLengthNicknameErrorMessage).toBeVisible({ timeout: 3000 });
+            await expect(profileGeneralInformationPage.maxLengthNicknameErrorMessage).toBeVisible({ timeout: 5 });
             await expect(profileGeneralInformationPage.maxLengthNicknameErrorMessage).toHaveText('Max length 50 characters');
             await expect(profileGeneralInformationPage.nicknameField).toHaveJSProperty('className', 'mb-1 form-control is-invalid');
         });
