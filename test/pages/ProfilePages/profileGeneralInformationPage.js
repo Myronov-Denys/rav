@@ -29,12 +29,15 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
         this.twitterExampleOfURL = page.locator('//small[text()="Example of url: https://twitter.com/RealAmVoice"]');
         this.instagramExampleOfURL = page.locator('//small[text()="Example of url: https://www.instagram.com/realamericasvoice"]');
         this.linkedinExampleOfURL = page.locator('//small[text()="Example of url: https://linkedin.com/RealAmericasVoice"]');
-    
 
         // Profile card
         this.statusOnProfileCard = page.locator("//h4[contains(@class,'styles_nickname')]/following-sibling::div[contains(@class,'styles_status')]");
         this.firstAndLastNameOnProfileCard = page.locator("//h4[contains(@class,'styles_name')]");
         this.nicknameOnProfileCard = page.locator("//h4[contains(@class,'styles_nickname')]");
+        this.facebookIconOnProfileCard = page.locator("//h4[contains(@class,'styles_nickname')]/..//a[contains(@href,'facebook')]");
+        this.linkedinIconOnProfileCard = page.locator("//h4[contains(@class,'styles_nickname')]/..//a[contains(@href,'linkedin')]");
+        this.twitterIconOnProfileCard = page.locator("//h4[contains(@class,'styles_nickname')]/..//a[contains(@href,'twitter')]");
+        this.instagramIconOnProfileCard = page.locator("//h4[contains(@class,'styles_nickname')]/..//a[contains(@href,'instagram')]");
 
         // Buttons
         this.saveButton = page.locator("//div[@class='p-3 card-footer']//button");
@@ -45,6 +48,9 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
         this.twitterSocialField = page.locator('#tw-social');
         this.instagramSocialField = page.locator('#inst-social');
         this.linkedinSocialField = page.locator('#ln-social');
+
+        // PopUp Message
+        this.congratulationsProfileSuccessfullyChangedPopUpMessage = page.locator("//div[contains(text(),'Congratulations!')]");
     }
 
     // Actions
@@ -109,6 +115,54 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
     async enterHTMLTagsInTheStatusField() {
         const testValue = new TestValue(this.page);
         await this.statusField.fill(testValue.htmlLinkWithLinkText);
+    }
+
+    async enterFacebookHTTPSLinkInTheFacebookSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.facebookSocialField.clear();
+        await this.facebookSocialField.fill(testValue.httpsFacebookLink);
+    }
+
+    async enterTwitterHTTPSLinkInTheTwitterSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.twitterSocialField.clear();
+        await this.twitterSocialField.fill(testValue.httpsTwitterLink);
+    }
+
+    async enterInstagramHTTPSLinkInTheInstagramSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.instagramSocialField.clear();
+        await this.instagramSocialField.fill(testValue.httpsInstagramLink);
+    }
+
+    async enterLinkedinHTTPSLinkInTheLinkedinSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.linkedinSocialField.clear();
+        await this.linkedinSocialField.fill(testValue.httpsLinkedInLink);
+    }
+
+    async enterFacebookHTTPLinkInTheFacebookSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.facebookSocialField.clear();
+        await this.facebookSocialField.fill(testValue.httpFacebookLink);
+    }
+
+    async enterTwitterHTTPLinkInTheTwitterSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.twitterSocialField.clear();
+        await this.twitterSocialField.fill(testValue.httpTwitterLink);
+    }
+
+    async enterInstagramHTTPLinkInTheInstagramSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.instagramSocialField.clear();
+        await this.instagramSocialField.fill(testValue.httpInstagramLink);
+    }
+
+    async enterLinkedinHTTPLinkInTheLinkedinSocialfield() {
+        const testValue = new TestValue(this.page);
+        await this.linkedinSocialField.clear();
+        await this.linkedinSocialField.fill(testValue.httpLinkedInLink);
     }
 
     // Scroll
