@@ -165,8 +165,28 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
         await this.linkedinSocialField.fill(testValue.httpLinkedInLink);
     }
 
+    async enterTheTwitterSocialLink_InTheFacebookSocialField() {
+        const testValue = new TestValue(this.page);
+        await this.facebookSocialField.clear();
+        await this.facebookSocialField.fill(testValue.httpTwitterLink);
+    }
+
+    // Clear data
+
+    async clearSocialFileds() {
+        await this.facebookSocialField.clear();
+        await this.twitterSocialField.clear();
+        await this.instagramSocialField.clear();
+        await this.linkedinSocialField.clear();
+    }
+
     // Scroll
     async scrollToSaveButton() {
         await this.page.locator('//div[@class="p-3 card-footer"]').scrollIntoViewIfNeeded();
+    }
+
+    // Click
+    async clickSaveButton() {
+        await this.saveButton.click({ timeout: 100000 });
     }
 };

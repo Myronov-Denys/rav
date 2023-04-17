@@ -16,6 +16,7 @@ exports.TestValue = class TestValue {
 
         // Valid User data
         this.validEmail = '1234test667890+2@gmail.com';
+        this.validChangedDataEmail = '1234test667890+201@gmail.com'; // Email to change profile data
         this.validPassword = 'Test13579';
         this.notRegisteredEmail = '1234test667890+1099875@gmail.com';
 
@@ -29,7 +30,24 @@ exports.TestValue = class TestValue {
 
         // HTML Tags
         this.htmlLinkWithLinkText = '<a href="www.google.com">link</a>';
+
+        //  Social media links
+        // HTTPS
+        this.httpsFacebookLink = 'https://www.facebook.com/RealAmericasVoice';
+        this.httpsTwitterLink = 'https://www.twitter.com/RealAmVoice';
+        this.httpsInstagramLink = 'https://www.instagram.com/realamericasvoice';
+        this.httpsLinkedInLink = 'https://www.linkedin.com/RealAmericasVoice';
+
+        // HTTP
+        this.httpFacebookLink = 'http://www.facebook.com/RealAmericasVoice';
+        this.httpTwitterLink = 'http://www.twitter.com/RealAmVoice';
+        this.httpInstagramLink = 'http://www.instagram.com/realamericasvoice';
+        this.httpLinkedInLink = 'http://www.linkedin.com/RealAmericasVoice';
+
+        this.regexTwitterSocialLink = /.*:\/\/www\.twitter\.com\/RealAmVoice/;
     }
+
+    // To run test on different env need change Open URL on Before Each
 
     async open_Dev_Url() {
         await this.page.goto('https://dev.americasvoice.news/');
