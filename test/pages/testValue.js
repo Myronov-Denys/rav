@@ -5,11 +5,6 @@ exports.TestValue = class TestValue {
     constructor(page) {
         this.page = page;
 
-        // Apps
-
-        // console.log('Title :' + await newTab.title());
-        // console.log('Url :' + await newTab.url());
-
         // Roku
         this.rokuAppUrl = 'https://channelstore.roku.com/en-gb/details/5e1b380d0d963b69b988490cd2a0a488/americas-voice-news';
         this.rokuAppPageTitle = "Real America's Voice | TV app | Roku Channel Store | Roku";
@@ -44,7 +39,13 @@ exports.TestValue = class TestValue {
         this.httpInstagramLink = 'http://www.instagram.com/realamericasvoice';
         this.httpLinkedInLink = 'http://www.linkedin.com/RealAmericasVoice';
 
+        // Incorrect social links
+        this.incorrectLinkedinLink = 'https://www.linkedin.io/RealAmericasVoice';
+
+        // Regax
         this.regexTwitterSocialLink = /.*:\/\/www\.twitter\.com\/RealAmVoice/;
+
+        this.YoutubeRAVLink = 'https://www.youtube.com/channel/UCMGZ8pfQHgZ6Yj0-92PMENg';
     }
 
     // To run test on different env need change Open URL on Before Each

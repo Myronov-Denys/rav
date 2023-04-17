@@ -171,6 +171,24 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
         await this.facebookSocialField.fill(testValue.httpTwitterLink);
     }
 
+    async enterYoutubeLinkOnTheTwitterSocialField() {
+        const testValue = new TestValue(this.page);
+        await this.twitterSocialField.clear();
+        await this.twitterSocialField.fill(testValue.YoutubeRAVLink);
+    }
+
+    async enterTextInTheInstagramSocialField() {
+        const testValue = new TestValue(this.page);
+        await this.instagramSocialField.clear();
+        await this.instagramSocialField.fill('Hello World');
+    }
+
+    async enterTheIncorrectLinkedinLinkInTheLinkedinSocialField() {
+        const testValue = new TestValue(this.page);
+        await this.linkedinSocialField.clear();
+        await this.linkedinSocialField.fill(testValue.incorrectLinkedinLink);
+    }
+
     // Clear data
 
     async clearSocialFileds() {
@@ -187,6 +205,6 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
 
     // Click
     async clickSaveButton() {
-        await this.saveButton.click({ timeout: 100000 });
+        await this.saveButton.click({ timeout: 3000 });
     }
 };
