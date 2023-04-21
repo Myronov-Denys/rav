@@ -5,6 +5,7 @@ const { ProjectPasswordPage } = require('./pages/projectPasswordPage');
 const { SignInPage } = require('./pages/signInPage');
 const { TestValue } = require('./pages/testValue');
 const { ProfileGeneralInformationPage } = require('./pages/ProfilePages/profileGeneralInformationPage');
+// const { execPath } = require('process');
 
 test.beforeEach(async ({ page }, testInfo) => {
     console.log(`PreCondition 1: Enter the project password and then run the test : ${testInfo.title}`);
@@ -13,7 +14,14 @@ test.beforeEach(async ({ page }, testInfo) => {
     const homePage = new HomePage(page);
 
     await testValue.open_Dev_Url();
-    await projectPasswordPage.enterProjectPaswordOnDev();
+
+    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 1000 })) {
+        console.log('Project password is set');
+        await projectPasswordPage.enterProjectPaswordOnDev();
+    } else {
+        console.log('Project password is not set');
+    }
+    // await projectPasswordPage.enterProjectPaswordOnDev();
     // await homePage.homeTitle.waitFor();
     await homePage.clickCloseCookieBar();
 });
@@ -127,7 +135,7 @@ test.describe('Sidebar profile', () => {
 
 test.describe('General Information', () => {
     test.beforeEach(async ({ page }, testInfo) => {
-        console.log(`PreCondition 2: Log in and open "Profile" page : ${testInfo.title}`);
+        console.log(`PreCondition 2: LogIn and open the "Profile" page : ${testInfo.title}`);
         const signInPage = new SignInPage(page);
         const homePage = new HomePage(page);
 
@@ -536,6 +544,43 @@ test.describe('General Information', () => {
             console.log('Assert tests 2: The "Save" button is enabled');
 
             await expect(profileGeneralInformationPage.saveButton).toBeDisabled();
+        });
+    });
+
+    test.describe('Delete account', () => {
+        test.only('Delete the account without choosing any checkboxes on the account deletion confirmation window', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+
+            console.log("Step 1: Click a 'Delete Account' button");
+            await profileGeneralInformationPage.clickDeleteButton();
+
+            console.log('Assert test 1: Delete account modal window is displayed');
+            await expect(profileGeneralInformationPage.modalDeleteAccountPopupWindow).toBeVisible();
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
+
+            console.log("Step 2: Mark a 'Also delete my message history' checkbox");
+            await profileGeneralInformationPage.markTheAlsoDeleteMyMessageHistoryCheckbox();
+
+            console.log("Assert test 2: Check the 'Delete' button is not active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
+
+            console.log("Step 3: Mark a 'Yes, I'm sure!' checkbox");
+            await profileGeneralInformationPage.markYesImSureCheckboxOnDeleteModalPopupWindow();
+
+            console.log("Assert test 3: Check the 'Delete' button is active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeEnabled();
+
+            console.log("Step 4: Unmark a 'Also delete my message history' via text");
+            await profileGeneralInformationPage.markATheAlsoDeleteMyMessageHistoryText();
+
+            console.log("Assert test 4: Check the 'Delete' button is active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeEnabled();
+
+            console.log("Step 5: Unmark a 'Yes, I'm sure!' via text");
+            await profileGeneralInformationPage.markYesImSureTextOnDeleteModalPopupWindow();
+
+            console.log("Assert test 5: Check the 'Delete' button is active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
         });
     });
 });

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const { expect } = require('@playwright/test');
+const { ProjectPasswordPage } = require('./projectPasswordPage');
 
 exports.TestValue = class TestValue {
     constructor(page) {
@@ -51,7 +52,15 @@ exports.TestValue = class TestValue {
     // To run test on different env need change Open URL on Before Each
 
     async open_Dev_Url() {
+        // const projectPasswordPage = new ProjectPasswordPage(this.page);
         await this.page.goto('https://dev.americasvoice.news/');
+        // const projectPassordField = await projectPasswordPage.projectPasswordField.isVisible();
+        // if (projectPassordField) {
+        //     console.log('Enter project password');
+        //     await projectPasswordPage.enterProjectPaswordOnDev();
+        // } else {
+        //     console.log('Enter project password not needed');
+        // }
     }
 
     async open_Staging_Url() {

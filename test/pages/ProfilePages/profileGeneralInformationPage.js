@@ -41,6 +41,7 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
 
         // Buttons
         this.saveButton = page.locator("//div[@class='p-3 card-footer']//button");
+        this.daleteButton = page.locator("//div[@class='p-3 card-footer']//a[@class='link-danger']");
 
         // Social public meida
 
@@ -51,6 +52,15 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
 
         // PopUp Message
         this.congratulationsProfileSuccessfullyChangedPopUpMessage = page.locator("//div[contains(text(),'Congratulations!')]");
+
+        // Delete modal windows
+        this.modalDeleteAccountPopupWindow = page.locator('#contained-modal-title-vcenter');
+        this.deleteButtonOnDeleteModalPopupWindow = page.locator("//div[@class='modal-footer']/button");
+        this.yesImSureCheckboxOnDeleteModalPopupWindow = page.locator("//input[@id='delete-account']");
+        this.yesImSureTextOnDeleteModalPopupWindow = page.locator("//label[@for='delete-account']");
+        this.alsoDeleteMyMessageHistoryCheckboxOnDeleteModalPopupWindow = page.locator("//input[@id='delete-chat']");
+        this.alsoDeleteMyMessageHistoryTextOnDeleteModalPopupWindow = page.locator("//label[@for='delete-chat']");
+        this.closeDeleteModalPopupWindowButton = page.locator("//div[@class='modal-header']/button[@aria-label='Close']");
     }
 
     // Actions
@@ -205,6 +215,26 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
 
     // Click
     async clickSaveButton() {
-        await this.saveButton.click({ timeout: 3000 });
+        await this.saveButton.click({ timeout: 5000 });
+    }
+
+    async clickDeleteButton() {
+        await this.daleteButton.click({ timeout: 5000 });
+    }
+
+    async markTheAlsoDeleteMyMessageHistoryCheckbox() {
+        await this.alsoDeleteMyMessageHistoryCheckboxOnDeleteModalPopupWindow.click({ timeout: 5000 });
+    }
+
+    async markATheAlsoDeleteMyMessageHistoryText() {
+        await this.alsoDeleteMyMessageHistoryTextOnDeleteModalPopupWindow.click({ timeout: 5000 });
+    }
+
+    async markYesImSureCheckboxOnDeleteModalPopupWindow() {
+        await this.yesImSureCheckboxOnDeleteModalPopupWindow.click({ timeout: 5000 });
+    }
+
+    async markYesImSureTextOnDeleteModalPopupWindow() {
+        await this.yesImSureTextOnDeleteModalPopupWindow.click({ timeout: 5000 });
     }
 };
