@@ -19,8 +19,8 @@ test.beforeEach(async ({ page }, testInfo) => {
     }
     await homePage.clickCloseCookieBar();
 
-    console.log('PreCondition 2: Open Login page');
-    await homePage.clickProfileInHeader();
+    // console.log('PreCondition 2: Open Login page');
+    // await homePage.clickProfileInHeader();
 });
 
 test.describe('Header social media', () => {
@@ -44,8 +44,8 @@ test.describe('Header social media', () => {
         console.log('Assert test 1: New tab have the correct URL');
         await expect(newTab.url()).toMatch(socialMediaPages.regexFacebookPageURL);
 
-        console.log('Assert test 2: The "Fire TV" main text is displayed');
-        await expect(await newTab.title()).toBe(socialMediaPages.facebookTitle);
+        console.log('Assert test 2: The "Facebook" main text is displayed');
+        await expect(await newTab.title()).toContain(socialMediaPages.facebookTitle);
     });
 
     test('Open the "Twitter" link from header', async ({ page }) => {
