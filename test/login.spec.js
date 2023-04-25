@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 const { test, expect } = require('@playwright/test');
-const { sign } = require('crypto');
 // const { sign } = require('crypto');
 const { HomePage } = require('./pages/homePage');
 const { ProjectPasswordPage } = require('./pages/projectPasswordPage');
@@ -13,9 +12,14 @@ test.beforeEach(async ({ page }, testInfo) => {
     const projectPasswordPage = new ProjectPasswordPage(page);
     const homePage = new HomePage(page);
 
-    await testValue.open_Dev_Url();
-    await projectPasswordPage.enterProjectPaswordOnDev();
-    await homePage.homeTitle.waitFor();
+    await testValue.openURL();
+
+    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 20000 })) {
+        console.log('Project password is set');
+        await projectPasswordPage.enterProjectPaswordOnDev();
+    } else {
+        console.log('Project password is not set');
+    }
     await homePage.clickCloseCookieBar();
 
     console.log('PreCondition 2: Open Login page');

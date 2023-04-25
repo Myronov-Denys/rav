@@ -2,9 +2,18 @@
 const { expect } = require('@playwright/test');
 const { ProjectPasswordPage } = require('./projectPasswordPage');
 
+const ENV = {
+    dev: 'dev',
+    stage: 'stage',
+    live: 'live',
+};
+
 exports.TestValue = class TestValue {
     constructor(page) {
         this.page = page;
+
+        // Set env for all running tests
+        this.env = ENV.dev;
 
         // Roku
         this.rokuAppUrl = 'https://channelstore.roku.com/en-gb/details/5e1b380d0d963b69b988490cd2a0a488/americas-voice-news';
@@ -51,8 +60,30 @@ exports.TestValue = class TestValue {
 
     // To run test on different env need change Open URL on Before Each
 
+    async openURL() {
+        switch (this.env) {
+        case ENV.dev: {
+            await this.open_Dev_Url();
+            break;
+        }
+        case ENV.stage: {
+            await this.open_Staging_Url();
+            break;
+        }
+        case ENV.live: {
+            await this.open_Live_Url();
+            break;
+        }
+        default: {
+            console.log('Env not set. - Dev env is set by default');
+            await this.open_Dev_Url();
+        }
+        }
+    }
+
     async open_Dev_Url() {
         // const projectPasswordPage = new ProjectPasswordPage(this.page);
+        console.log('Open - Dev env');
         await this.page.goto('https://dev.americasvoice.news/');
         // const projectPassordField = await projectPasswordPage.projectPasswordField.isVisible();
         // if (projectPassordField) {
@@ -64,10 +95,12 @@ exports.TestValue = class TestValue {
     }
 
     async open_Staging_Url() {
+        console.log('Open - Staging env');
         await this.page.goto('https://staging.americasvoice.news/');
     }
 
     async open_Live_Url() {
+        console.log('Open - Live env');
         await this.page.goto('https://americasvoice.news/');
     }
 };

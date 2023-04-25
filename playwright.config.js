@@ -14,13 +14,15 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
     testDir: './test',
     /* Maximum time one test can run for. */
-    timeout: 5 * 60 * 1000,
+    timeout: 300000, // 5 minutes
+    // timeout: 5 * 60 * 1000,
     expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-        timeout: 5000,
+        timeout: 10000, // 10 sec
+
     },
     /* Run tests in files in parallel */
     fullyParallel: false,
@@ -35,7 +37,7 @@ module.exports = defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-        actionTimeout: 0,
+        actionTimeout: 10000,
         /* Base URL to use in actions like `await page.goto('/')`. */
         // baseURL: 'http://localhost:3000',
 

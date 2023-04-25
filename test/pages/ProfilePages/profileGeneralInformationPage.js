@@ -61,6 +61,10 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
         this.alsoDeleteMyMessageHistoryCheckboxOnDeleteModalPopupWindow = page.locator("//input[@id='delete-chat']");
         this.alsoDeleteMyMessageHistoryTextOnDeleteModalPopupWindow = page.locator("//label[@for='delete-chat']");
         this.closeDeleteModalPopupWindowButton = page.locator("//div[@class='modal-header']/button[@aria-label='Close']");
+
+        // Personal information switcher
+        this.hideOrShowPersonalDataSwitcher = page.locator("//input[@id='personal-data']");
+        this.hideOrShowPersonalDataText = page.locator("//label[@for='personal-data']");
     }
 
     // Actions
@@ -236,5 +240,17 @@ exports.ProfileGeneralInformationPage = class ProfileGeneralInformationPage {
 
     async markYesImSureTextOnDeleteModalPopupWindow() {
         await this.yesImSureTextOnDeleteModalPopupWindow.click({ timeout: 5000 });
+    }
+
+    async clickCloseDeleteWindow() {
+        await this.closeDeleteModalPopupWindowButton.click({ timeout: 5000 });
+    }
+
+    async clickHideOrShowPersonalDataText() {
+        await this.hideOrShowPersonalDataText.click({ timeout: 10000 });
+    }
+
+    async clickHideOrShowPersonalDataSwitcher() {
+        await this.hideOrShowPersonalDataSwitcher.click({ timeout: 10000 });
     }
 };

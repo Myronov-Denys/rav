@@ -13,16 +13,14 @@ test.beforeEach(async ({ page }, testInfo) => {
     const projectPasswordPage = new ProjectPasswordPage(page);
     const homePage = new HomePage(page);
 
-    await testValue.open_Dev_Url();
+    await testValue.openURL();
 
-    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 1000 })) {
+    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 30000 })) {
         console.log('Project password is set');
         await projectPasswordPage.enterProjectPaswordOnDev();
     } else {
         console.log('Project password is not set');
     }
-    // await projectPasswordPage.enterProjectPaswordOnDev();
-    // await homePage.homeTitle.waitFor();
     await homePage.clickCloseCookieBar();
 });
 
@@ -548,7 +546,7 @@ test.describe('General Information', () => {
     });
 
     test.describe('Delete account', () => {
-        test.only('Delete the account without choosing any checkboxes on the account deletion confirmation window', async ({ page }) => {
+        test('Delete the account without choosing any checkboxes on the account deletion confirmation window', async ({ page }) => {
             const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
 
             console.log("Step 1: Click a 'Delete Account' button");
@@ -581,6 +579,24 @@ test.describe('General Information', () => {
 
             console.log("Assert test 5: Check the 'Delete' button is active");
             await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
+
+            console.log("Step 6: Click a 'Close' modal popup window button");
+            await profileGeneralInformationPage.clickCloseDeleteWindow();
+
+            console.log('Assert test 5: Check delete modal popup window is closed');
+            await expect(profileGeneralInformationPage.modalDeleteAccountPopupWindow).not.toBeVisible();
+        });
+    });
+
+    test.describe('Personal information', () => {
+        test('Check the "Hide personal data" switcher', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+
+            console.log('Step 1: Click a "Personal information is hidden for other members" switcher');
+            await profileGeneralInformationPage.clickHideOrShowPersonalDataSwitcher();
+
+            console.log('Assert test 1: Check the "Personal information" is visible');
+            await expect(profileGeneralInformationPage.hideOrShowPersonalDataText).toContainText('Personal information is visible for other members');
         });
     });
 });
