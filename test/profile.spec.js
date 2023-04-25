@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }, testInfo) => {
 
     await testValue.openURL();
 
-    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 30000 })) {
+    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 20000 })) {
         console.log('Project password is set');
         await projectPasswordPage.enterProjectPaswordOnDev();
     } else {

@@ -82,9 +82,10 @@ exports.TestValue = class TestValue {
     }
 
     async open_Dev_Url() {
-        // const projectPasswordPage = new ProjectPasswordPage(this.page);
+        const projectPasswordPage = new ProjectPasswordPage(this.page);
         console.log('Open - Dev env');
         await this.page.goto('https://dev.americasvoice.news/');
+        await projectPasswordPage.projectPasswordField.waitFor();
         // const projectPassordField = await projectPasswordPage.projectPasswordField.isVisible();
         // if (projectPassordField) {
         //     console.log('Enter project password');
@@ -95,8 +96,10 @@ exports.TestValue = class TestValue {
     }
 
     async open_Staging_Url() {
+        const projectPasswordPage = new ProjectPasswordPage(this.page);
         console.log('Open - Staging env');
         await this.page.goto('https://staging.americasvoice.news/');
+        await projectPasswordPage.projectPasswordField.waitFor();
     }
 
     async open_Live_Url() {
