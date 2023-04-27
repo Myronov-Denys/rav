@@ -11,3 +11,27 @@
 
         // console.log('Title : ' + await newTab.title());
         // console.log('Url : ' + await newTab.url());
+
+
+
+
+        // const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+        //     const twtterIconOnProfileCardVisible = await profileGeneralInformationPage.twitterIconOnProfileCard.isVisible();
+        //     const twitterSocialFieldValue = await profileGeneralInformationPage.twitterSocialField.inputValue();
+        //     const facebookSocialFieldValue = await profileGeneralInformationPage.facebookSocialField.inputValue();
+        //     const instagramSocialFieldValue = await profileGeneralInformationPage.instagramSocialField.inputValue();
+        //     const linkedinSocialFieldValue = await profileGeneralInformationPage.linkedinSocialField.inputValue();
+
+        //     console.log('twitterSocialFieldValue1 : ', twitterSocialFieldValue);
+        //     console.log('twtterIconOnProfileCardVisible2 : ', twtterIconOnProfileCardVisible);
+        //     console.log('instagramIconOnProfileCardVisible2 : ', await profileGeneralInformationPage.instagramIconOnProfileCard.isVisible());
+
+        //     if (twitterSocialFieldValue || facebookSocialFieldValue || instagramSocialFieldValue || linkedinSocialFieldValue) {
+        //         console.log('Social field are not empty and will be cleared');
+
+        //         await profileGeneralInformationPage.clearSocialFileds();
+        //         await profileGeneralInformationPage.clickSaveButton();
+        //     } else {
+        //         console.log('Social field are empty');
+        //     }
+        // });
