@@ -23,9 +23,6 @@ test.beforeEach(async ({ page }, testInfo) => {
         console.log('Project password is not set');
     }
     await homePage.clickCloseCookieBar();
-
-    console.log('PreCondition 2: Open Login page');
-    await homePage.clickProfileInHeader();
 });
 
 test.describe('Header apps', () => {
