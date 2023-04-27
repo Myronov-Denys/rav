@@ -44,7 +44,7 @@ exports.SignInPage = class SignInPage {
     }
 
     async clickSignInButton() {
-        await this.signInButton.click();
+        await this.signInButton.click({ timeout: 5000 });
     }
 
     async logIn() {

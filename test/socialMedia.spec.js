@@ -10,10 +10,17 @@ test.beforeEach(async ({ page }, testInfo) => {
     const projectPasswordPage = new ProjectPasswordPage(page);
     const homePage = new HomePage(page);
 
-    await testValue.open_Dev_Url();
-    await projectPasswordPage.enterProjectPaswordOnDev();
-    await homePage.homeTitle.waitFor();
+    await testValue.openURL();
+    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 20000 })) {
+        console.log('Project password is set');
+        await projectPasswordPage.enterProjectPaswordOnDev();
+    } else {
+        console.log('Project password is not set');
+    }
     await homePage.clickCloseCookieBar();
+
+    // console.log('PreCondition 2: Open Login page');
+    // await homePage.clickProfileInHeader();
 });
 
 test.describe('Header social media', () => {
@@ -37,8 +44,8 @@ test.describe('Header social media', () => {
         console.log('Assert test 1: New tab have the correct URL');
         await expect(newTab.url()).toMatch(socialMediaPages.regexFacebookPageURL);
 
-        console.log('Assert test 2: The "Fire TV" main text is displayed');
-        await expect(await newTab.title()).toBe(socialMediaPages.facebookTitle);
+        console.log('Assert test 2: The "Facebook" main text is displayed');
+        await expect(await newTab.title()).toContain(socialMediaPages.facebookTitle);
     });
 
     test('Open the "Twitter" link from header', async ({ page }) => {

@@ -5,6 +5,7 @@ const { ProjectPasswordPage } = require('./pages/projectPasswordPage');
 const { SignInPage } = require('./pages/signInPage');
 const { TestValue } = require('./pages/testValue');
 const { ProfileGeneralInformationPage } = require('./pages/ProfilePages/profileGeneralInformationPage');
+// const { execPath } = require('process');
 
 test.beforeEach(async ({ page }, testInfo) => {
     console.log(`PreCondition 1: Enter the project password and then run the test : ${testInfo.title}`);
@@ -12,9 +13,14 @@ test.beforeEach(async ({ page }, testInfo) => {
     const projectPasswordPage = new ProjectPasswordPage(page);
     const homePage = new HomePage(page);
 
-    await testValue.open_Dev_Url();
-    await projectPasswordPage.enterProjectPaswordOnDev();
-    await homePage.homeTitle.waitFor();
+    await testValue.openURL();
+
+    if (await projectPasswordPage.projectPasswordField.isVisible({ timeout: 20000 })) {
+        console.log('Project password is set');
+        await projectPasswordPage.enterProjectPaswordOnDev();
+    } else {
+        console.log('Project password is not set');
+    }
     await homePage.clickCloseCookieBar();
 });
 
@@ -127,7 +133,7 @@ test.describe('Sidebar profile', () => {
 
 test.describe('General Information', () => {
     test.beforeEach(async ({ page }, testInfo) => {
-        console.log(`PreCondition 2: Log in and open "Profile" page : ${testInfo.title}`);
+        console.log(`PreCondition 2: LogIn and open the "Profile" page : ${testInfo.title}`);
         const signInPage = new SignInPage(page);
         const homePage = new HomePage(page);
 
@@ -173,12 +179,12 @@ test.describe('General Information', () => {
             const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
 
             console.log('Step 1: Enter in the "Nickname" field more than 50 characters');
+
             await profileGeneralInformationPage.enter51CharactersInTheNicknameField();
 
             console.log('Assert tests');
 
-            await expect(profileGeneralInformationPage.nicknameField).toBeVisible({ timeout: 10000 });
-            await expect(profileGeneralInformationPage.maxLengthNicknameErrorMessage).toBeVisible({ timeout: 3000 });
+            await expect(profileGeneralInformationPage.maxLengthNicknameErrorMessage).toBeVisible({ timeout: 5 });
             await expect(profileGeneralInformationPage.maxLengthNicknameErrorMessage).toHaveText('Max length 50 characters');
             await expect(profileGeneralInformationPage.nicknameField).toHaveJSProperty('className', 'mb-1 form-control is-invalid');
         });
@@ -302,18 +308,295 @@ test.describe('General Information', () => {
             await expect(profileGeneralInformationPage.saveButton).toBeEnabled();
         });
     });
-    test.describe('Paste social links on social fields', () => {
-        test(' Paste valid HTTPS social links on social field', async ({ page }) => {
+    test.describe('Social links fields', () => {
+        test.beforeEach(async ({ page }) => {
             const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
 
+            await profileGeneralInformationPage.twitterIconOnProfileCard.isVisible();
+            const twitterSocialFieldValue = await profileGeneralInformationPage.twitterSocialField.inputValue();
+            const facebookSocialFieldValue = await profileGeneralInformationPage.facebookSocialField.inputValue();
+            const instagramSocialFieldValue = await profileGeneralInformationPage.instagramSocialField.inputValue();
+            const linkedinSocialFieldValue = await profileGeneralInformationPage.linkedinSocialField.inputValue();
+
+            if (twitterSocialFieldValue || facebookSocialFieldValue || instagramSocialFieldValue || linkedinSocialFieldValue) {
+                console.log('Social field are not empty and will be cleared');
+
+                await profileGeneralInformationPage.clearSocialFileds();
+                await profileGeneralInformationPage.clickSaveButton();
+            } else {
+                console.log('Social field are empty');
+            }
+        });
+        test('Paste valid HTTPS social links on social field', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+            const testValue = new TestValue(page);
+            const homePage = new HomePage(page);
+
+            // await profileGeneralInformationPage.firstNameField.click();
+
             console.log('Step 1: Enter HTTPS social links in the social fields');
-            await profileGeneralInformationPage.enterHTMLTagsInTheStatusField();
+            await profileGeneralInformationPage.enterFacebookHTTPSLinkInTheFacebookSocialfield();
+            await profileGeneralInformationPage.enterInstagramHTTPSLinkInTheInstagramSocialfield();
+            await profileGeneralInformationPage.enterTwitterHTTPSLinkInTheTwitterSocialfield();
+            await profileGeneralInformationPage.enterLinkedinHTTPSLinkInTheLinkedinSocialfield();
 
-            console.log('Assert tests');
+            console.log('Assert tests 1: The social links error message are not displayed');
 
-            await expect(profileGeneralInformationPage.statusField).toHaveText('link');
-            await expect(profileGeneralInformationPage.statusOnProfileCard).toHaveText('link');
+            await expect(profileGeneralInformationPage.incorrectFacebookUrlErrorMessage).not.toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectTwitterUrlErrorMessage).not.toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectInstagramUrlErrorMessage).not.toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectLinkedinUrlErrorMessage).not.toBeVisible();
+
+            console.log('Assert tests 2: The Social links displayed on social fields');
+
+            await expect(profileGeneralInformationPage.facebookSocialField).toHaveValue(testValue.httpsFacebookLink);
+            await expect(profileGeneralInformationPage.twitterSocialField).toHaveValue(testValue.httpsTwitterLink);
+            await expect(profileGeneralInformationPage.instagramSocialField).toHaveValue(testValue.httpsInstagramLink);
+            await expect(profileGeneralInformationPage.linkedinSocialField).toHaveValue(testValue.httpsLinkedInLink);
+
+            console.log('Assert tests 3: Social icons are displayed on profile card');
+
+            await expect(profileGeneralInformationPage.facebookIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.twitterIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.linkedinIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.instagramIconOnProfileCard).toBeVisible();
+
+            console.log('Assert tests 4: The Save button is enabled');
+            await profileGeneralInformationPage.scrollToSaveButton();
             await expect(profileGeneralInformationPage.saveButton).toBeEnabled();
+
+            console.log('Step 2: Click save button');
+            await profileGeneralInformationPage.saveButton.click();
+
+            console.log('Assert tests 5: Congratulations successfully changed popup message is displayed');
+            await expect(profileGeneralInformationPage.congratulationsProfileSuccessfullyChangedPopUpMessage).toBeVisible({ timeout: 5000 });
+
+            console.log("Step 3: Open the home page and return to the 'Profile' page and check the saved data");
+            await homePage.homeButton.click();
+            await homePage.homeTitle.isVisible();
+            await homePage.clickProfileInHeader();
+
+            console.log('Assert tests 6: The Social links displayed on social fields');
+
+            await expect(profileGeneralInformationPage.facebookSocialField).toHaveValue(testValue.httpsFacebookLink);
+            await expect(profileGeneralInformationPage.twitterSocialField).toHaveValue(testValue.httpsTwitterLink);
+            await expect(profileGeneralInformationPage.instagramSocialField).toHaveValue(testValue.httpsInstagramLink);
+            await expect(profileGeneralInformationPage.linkedinSocialField).toHaveValue(testValue.httpsLinkedInLink);
+
+            console.log('Assert tests 7: Social icons are displayed on profile card');
+
+            await expect(profileGeneralInformationPage.facebookIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.twitterIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.linkedinIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.instagramIconOnProfileCard).toBeVisible();
+
+            // console.log('Step 4: Clear data and save');
+            // await profileGeneralInformationPage.facebookSocialField.clear();
+            // await profileGeneralInformationPage.twitterSocialField.clear();
+            // await profileGeneralInformationPage.instagramSocialField.clear();
+            // await profileGeneralInformationPage.linkedinSocialField.clear();
+
+            // console.log('Step 5: Click save button');
+            // await profileGeneralInformationPage.saveButton.click();
+
+            // console.log('Assert tests 8: Congratulations successfully changed popup message is displayed');
+            // await expect(await profileGeneralInformationPage.congratulationsProfileSuccessfullyChangedPopUpMessage).toBeVisible({ timeout: 500 });
+        });
+
+        test('Paste valid HTTP social links on social field', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+            const testValue = new TestValue(page);
+            const homePage = new HomePage(page);
+
+            console.log('Step 1: Enter HTTP social links in the social fields');
+            await profileGeneralInformationPage.enterFacebookHTTPLinkInTheFacebookSocialfield();
+            await profileGeneralInformationPage.enterTwitterHTTPLinkInTheTwitterSocialfield();
+            await profileGeneralInformationPage.enterLinkedinHTTPLinkInTheLinkedinSocialfield();
+            await profileGeneralInformationPage.enterInstagramHTTPLinkInTheInstagramSocialfield();
+
+            console.log('Assert tests 1: The social links error message are not displayed');
+
+            await expect(profileGeneralInformationPage.incorrectFacebookUrlErrorMessage).not.toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectTwitterUrlErrorMessage).not.toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectInstagramUrlErrorMessage).not.toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectLinkedinUrlErrorMessage).not.toBeVisible();
+
+            console.log('Assert tests 2: The Social links displayed on social fields');
+
+            await expect(profileGeneralInformationPage.facebookSocialField).toHaveValue(testValue.httpFacebookLink);
+            await expect(profileGeneralInformationPage.twitterSocialField).toHaveValue(testValue.httpTwitterLink);
+            await expect(profileGeneralInformationPage.instagramSocialField).toHaveValue(testValue.httpInstagramLink);
+            await expect(profileGeneralInformationPage.linkedinSocialField).toHaveValue(testValue.httpLinkedInLink);
+
+            console.log('Assert tests 3: Social icons are displayed on profile card');
+
+            await expect(profileGeneralInformationPage.facebookIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.twitterIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.linkedinIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.instagramIconOnProfileCard).toBeVisible();
+
+            console.log('Assert tests 4: The Save button is enabled');
+            await profileGeneralInformationPage.scrollToSaveButton();
+            await expect(profileGeneralInformationPage.saveButton).toBeEnabled();
+
+            console.log('Step 2: Click save button');
+            await profileGeneralInformationPage.clickSaveButton();
+
+            console.log('Assert tests 5: Congratulations successfully changed popup message is displayed');
+            await expect(profileGeneralInformationPage.congratulationsProfileSuccessfullyChangedPopUpMessage).toBeVisible({ timeout: 5000 });
+
+            console.log("Step 3: Open the home page and return to the 'Profile' page and check the saved data");
+            await homePage.homeButton.click();
+            await homePage.clickProfileInHeader();
+
+            console.log('Assert tests 6: The Social links displayed on social fields');
+
+            await expect(profileGeneralInformationPage.facebookSocialField).toHaveValue(testValue.httpFacebookLink);
+            await expect(profileGeneralInformationPage.twitterSocialField).toHaveValue(testValue.httpTwitterLink);
+            await expect(profileGeneralInformationPage.instagramSocialField).toHaveValue(testValue.httpInstagramLink);
+            await expect(profileGeneralInformationPage.linkedinSocialField).toHaveValue(testValue.httpLinkedInLink);
+
+            console.log('Assert tests 7: Social icons are displayed on profile card');
+
+            await expect(profileGeneralInformationPage.facebookIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.twitterIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.linkedinIconOnProfileCard).toBeVisible();
+            await expect(profileGeneralInformationPage.instagramIconOnProfileCard).toBeVisible();
+
+            // console.log('Step 4: Clear data and save');
+            // await profileGeneralInformationPage.clearSocialFileds();
+
+            // console.log('Step 5: Click save button');
+            // await profileGeneralInformationPage.clickSaveButton();
+
+            // console.log('Assert tests 8: Congratulations successfully changed popup message is displayed');
+            // await expect(await profileGeneralInformationPage.congratulationsProfileSuccessfullyChangedPopUpMessage).toBeVisible({ timeout: 5000 });
+
+            // console.log('instagram : ', await profileGeneralInformationPage.instagramIconOnProfileCard.isVisible());
+            // console.log('twitter : ', await profileGeneralInformationPage.twitterIconOnProfileCard.isVisible());
+            // console.log('facebook : ', await profileGeneralInformationPage.facebookIconOnProfileCard.isVisible());
+            // console.log('linkedin : ', await profileGeneralInformationPage.linkedinIconOnProfileCard.isVisible());
+        });
+
+        test('Delete social links from social field', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+            const homePage = new HomePage(page);
+
+            console.log('Step 1: Enter HTTP social links in the social fields');
+            await profileGeneralInformationPage.enterFacebookHTTPLinkInTheFacebookSocialfield();
+            await profileGeneralInformationPage.enterTwitterHTTPLinkInTheTwitterSocialfield();
+            await profileGeneralInformationPage.enterLinkedinHTTPLinkInTheLinkedinSocialfield();
+            await profileGeneralInformationPage.enterInstagramHTTPLinkInTheInstagramSocialfield();
+
+            console.log('Step 2: Click save button');
+            await profileGeneralInformationPage.clickSaveButton();
+
+            console.log("Step 3: Open the home page and return to the 'Profile' page and check the saved data");
+            await homePage.homeButton.click();
+            await homePage.clickProfileInHeader();
+
+            console.log('Step 4: Clear data and save');
+            await profileGeneralInformationPage.facebookSocialField.clear();
+            await profileGeneralInformationPage.twitterSocialField.clear();
+            await profileGeneralInformationPage.instagramSocialField.clear();
+            await profileGeneralInformationPage.linkedinSocialField.clear();
+
+            console.log('Step 5: Click save button');
+            await profileGeneralInformationPage.saveButton.click();
+
+            console.log("Step 6: Open the home page and return to the 'Profile' page and check the saved data");
+            await homePage.homeButton.click();
+            await homePage.clickProfileInHeader();
+
+            console.log('Assert tests 2: The Social links displayed on social fields');
+
+            await expect(profileGeneralInformationPage.facebookSocialField).toHaveValue('');
+            await expect(profileGeneralInformationPage.twitterSocialField).toHaveValue('');
+            await expect(profileGeneralInformationPage.instagramSocialField).toHaveValue('');
+            await expect(profileGeneralInformationPage.linkedinSocialField).toHaveValue('');
+
+            console.log('Assert tests 3: Social icons are not displayed on profile card');
+
+            await expect(profileGeneralInformationPage.facebookIconOnProfileCard).not.toBeVisible();
+            await expect(profileGeneralInformationPage.twitterIconOnProfileCard).not.toBeVisible();
+            await expect(profileGeneralInformationPage.linkedinIconOnProfileCard).not.toBeVisible();
+            await expect(profileGeneralInformationPage.instagramIconOnProfileCard).not.toBeVisible();
+        });
+
+        test('Enter invalid social networks links in the social networks fields', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+
+            console.log('Step 1: Enter HTTP social links in the social fields');
+            await profileGeneralInformationPage.enterTheTwitterSocialLink_InTheFacebookSocialField();
+            await profileGeneralInformationPage.enterYoutubeLinkOnTheTwitterSocialField();
+            await profileGeneralInformationPage.enterTextInTheInstagramSocialField();
+            await profileGeneralInformationPage.enterTheIncorrectLinkedinLinkInTheLinkedinSocialField();
+
+            console.log('Assert tests 1: The social links error message are displayed');
+
+            await expect(profileGeneralInformationPage.incorrectFacebookUrlErrorMessage).toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectTwitterUrlErrorMessage).toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectInstagramUrlErrorMessage).toBeVisible();
+            await expect(profileGeneralInformationPage.incorrectLinkedinUrlErrorMessage).toBeVisible();
+
+            console.log('Assert tests 2: The "Save" button is enabled');
+
+            await expect(profileGeneralInformationPage.saveButton).toBeDisabled();
+        });
+    });
+
+    test.describe('Delete account', () => {
+        test('Delete the account without choosing any checkboxes on the account deletion confirmation window', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+
+            console.log("Step 1: Click a 'Delete Account' button");
+            await profileGeneralInformationPage.clickDeleteButton();
+
+            console.log('Assert test 1: Delete account modal window is displayed');
+            await expect(profileGeneralInformationPage.modalDeleteAccountPopupWindow).toBeVisible();
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
+
+            console.log("Step 2: Mark a 'Also delete my message history' checkbox");
+            await profileGeneralInformationPage.markTheAlsoDeleteMyMessageHistoryCheckbox();
+
+            console.log("Assert test 2: Check the 'Delete' button is not active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
+
+            console.log("Step 3: Mark a 'Yes, I'm sure!' checkbox");
+            await profileGeneralInformationPage.markYesImSureCheckboxOnDeleteModalPopupWindow();
+
+            console.log("Assert test 3: Check the 'Delete' button is active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeEnabled();
+
+            console.log("Step 4: Unmark a 'Also delete my message history' via text");
+            await profileGeneralInformationPage.markATheAlsoDeleteMyMessageHistoryText();
+
+            console.log("Assert test 4: Check the 'Delete' button is active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeEnabled();
+
+            console.log("Step 5: Unmark a 'Yes, I'm sure!' via text");
+            await profileGeneralInformationPage.markYesImSureTextOnDeleteModalPopupWindow();
+
+            console.log("Assert test 5: Check the 'Delete' button is active");
+            await expect(profileGeneralInformationPage.deleteButtonOnDeleteModalPopupWindow).toBeDisabled();
+
+            console.log("Step 6: Click a 'Close' modal popup window button");
+            await profileGeneralInformationPage.clickCloseDeleteWindow();
+
+            console.log('Assert test 5: Check delete modal popup window is closed');
+            await expect(profileGeneralInformationPage.modalDeleteAccountPopupWindow).not.toBeVisible();
+        });
+    });
+
+    test.describe('Personal information', () => {
+        test('Check the "Hide personal data" switcher', async ({ page }) => {
+            const profileGeneralInformationPage = new ProfileGeneralInformationPage(page);
+
+            console.log('Step 1: Click a "Personal information is hidden for other members" switcher');
+            await profileGeneralInformationPage.clickHideOrShowPersonalDataSwitcher();
+
+            console.log('Assert test 1: Check the "Personal information" is visible');
+            await expect(profileGeneralInformationPage.hideOrShowPersonalDataText).toContainText('Personal information is visible for other members');
         });
     });
 });

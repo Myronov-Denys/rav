@@ -13,6 +13,7 @@ exports.HomePage = class HomePage {
         // Header //
 
         this.sideBarButton = page.locator("//span[@class='navbar-brand']/div[contains(@class,'styles_root')]");
+        this.homeButton = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Home')]");
 
         this.showsHeaderButton = page.locator("//div[contains(@class, 'd-none')]//a[contains(text(),'Shows')]");
 
@@ -147,7 +148,7 @@ exports.HomePage = class HomePage {
     // Cookies bar
 
     async clickCloseCookieBar() {
-        await this.cookiesCloseButton.click();
+        await this.cookiesCloseButton.click({ timeout: 50000 });
     }
 
     // Header //
