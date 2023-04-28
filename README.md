@@ -1,24 +1,40 @@
 # DevIT_Playwright
 
 
-// Run tests
+## // Run tests
 
-    // run all tsts
-npx playwright test 
+    // Run all tests
+`npx playwright test `
 
-    //run only 1 spec (for example socialMedia) 
-npx playwright test socialMedia.spec.js
+    // Run only 1 spec (for example socialMedia) 
+`npx playwright test socialMedia.spec.js`
 
-    //run with visual browser
-npx playwright test --headed
+    // Run with visual browser
+`npx playwright test --headed`
 
-    //run debug
-npx playwright test --debug
+    // Run debug
+`npx playwright test --debug`
+
+    // To change the number of windows in which the test will be checked
+`npx playwright test --workers 3`
+Or change on the "playwright.config.js" document
+
+## // The number of windows of parallel tests changes in the "playwright.config.js" document
+
+## // To change the maximum waiting time for actions or completion of 1 test, see the "playwright.config.js" document
 
 
-npx playwright test ./tests/adding_uses.spec.js --project chromium --headed //для відобреження тесту
+workers: process.env.CI ? 1 : undefined, in order for all tests to run in 3 or 4 windows at the same time, you need to change the value 'undefined' to the required amount in the file 'playwright.config.js'
 
-npx playwright test --workers 3 //для зміни кількості вікон в яких буде проходити перевірка тесту
+## Choosing an environment for running the test
 
-workers: process.env.CI ? 1 : undefined, щоб всі тести проходили в 3 або 4 вікнах одночасно потрібно зімінити значення 'undefined' на потрібне у файлі 'playwright.config.js'
+To run tests on different envs, change
+`this.env = ENV.dev`; on a "testValue.js"
 
+Where value
+- `.dev` - run tets on the Dev env 
+`this.env = ENV.dev`
+- `.stage` - run tets on the Staging env 
+`this.env = ENV.stage`
+- `.live` - run tets on the Prod env
+`this.env = ENV.live`
